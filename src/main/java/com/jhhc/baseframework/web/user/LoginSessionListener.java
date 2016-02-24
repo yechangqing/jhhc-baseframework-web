@@ -1,8 +1,6 @@
-package com.jhhc.baseframework.web.controller;
+package com.jhhc.baseframework.web.user;
 
 import com.jhhc.baseframework.web.core.Root;
-import com.jhhc.baseframework.web.user.Login;
-import com.jhhc.baseframework.web.user.LoginManager;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;

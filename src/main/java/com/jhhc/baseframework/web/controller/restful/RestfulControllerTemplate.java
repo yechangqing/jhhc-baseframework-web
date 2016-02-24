@@ -12,34 +12,34 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author yecq
  */
-@RestController
-@RequestMapping("/resources")
+//@RestController
+//@RequestMapping("/resources")
 public abstract class RestfulControllerTemplate extends RestfulControllerBase {
 
-    @RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
+//    @RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
     public Object gets(HttpServletRequest request) {
         Map<String, String> param = getParamMap(request);
         return null;
     }
 
-    @RequestMapping(value = {"/{id}"}, method = RequestMethod.GET)
+//    @RequestMapping(value = {"/{id}"}, method = RequestMethod.GET)
     public Object get(@PathVariable("id") String id, HttpServletRequest request) {
         return null;
     }
 
-    @RequestMapping(value = {"", "/"}, method = RequestMethod.POST)
+//    @RequestMapping(value = {"", "/"}, method = RequestMethod.POST)
     public Object add(HttpServletRequest request) {
         Map<String, String> param = getParamMap(request);
         return null;
     }
 
-    @RequestMapping(value = {"/{id}"}, method = RequestMethod.PUT)
+//    @RequestMapping(value = {"/{id}"}, method = RequestMethod.PUT)
     public Object modify(@PathVariable("id") String id, HttpServletRequest request) {
         Map<String, String> param = getParamMap(request);
         return null;
     }
 
-    @RequestMapping(value = {"/{id}"}, method = RequestMethod.DELETE)
+//    @RequestMapping(value = {"/{id}"}, method = RequestMethod.DELETE)
     public Object remove(@PathVariable("id") String id, HttpServletRequest request) {
         return null;
     }
