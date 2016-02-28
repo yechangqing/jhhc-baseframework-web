@@ -38,7 +38,7 @@ public class RestfulControllerTest extends IntegrateRestfulBase {
         TestReturn ret = doGet("/std/contracts/");
         assertThat(ret.getHeader("status"), is("ok"));
         assertThat(ret.getHeader("message"), is("ok"));
-        List<Contract> list = ret.getObjectForList(Contract.class);
+        List<Contract> list = ret.getObject4List(Contract.class);
         assertThat(list.size(), is(3));
         assertThat(list.get(1).getCode(), is("m1609"));
     }
