@@ -2,6 +2,7 @@ package com.jhhc.baseframework.web.controller.restful;
 
 import com.jhhc.baseframework.test.IntegrateRestfulBase;
 import com.jhhc.baseframework.test.TestReturn;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import static org.hamcrest.CoreMatchers.is;
@@ -27,6 +28,14 @@ public class ComplexRestfulControllerTest extends IntegrateRestfulBase {
         TestReturn ret = doGet("/contracts?a=12");
         assertThat(ret.getHeader("status"), is("ok"));
         assertThat(ret.getHeader("message"), is("参数a=12"));
+    }
+
+    @Test
+    public void test3_gets() {
+        // url中放入参数
+        TestReturn ret = doGet("/contracts?a=%7B%22direct%22%3A%22%E7%A9%BA%22%7D");
+        assertThat(ret.getHeader("status"), is("ok"));
+        assertThat(ret.getHeader("message"), is("参数a={\"direct\":\"空\"}"));
     }
 
     @Test
@@ -86,5 +95,14 @@ public class ComplexRestfulControllerTest extends IntegrateRestfulBase {
         TestReturn ret = doGet("/accounts/2");
         assertThat(ret.getHeader("status"), is("ok"));
         assertThat(ret.getHeader("message"), is("获得对象id=2"));
+    }
+
+    @Test
+    public void test_decode() {
+        Map map = new HashMap();
+        map.put("json", URLEncoder.encode("{\"direct\":\"空\"}"));
+        TestReturn ret = doGet("/contracts/decode", map);
+        assertThat(ret.getStatus(), is("ok"));
+        assertThat(ret.getMessage(), is("收到参数json={\"direct\":\"空\"}"));
     }
 }

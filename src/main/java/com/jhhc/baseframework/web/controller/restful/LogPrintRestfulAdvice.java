@@ -51,14 +51,14 @@ public class LogPrintRestfulAdvice {
                 mapping += ", " + rm.method()[0];
             }
 //        Parameter[] para = m.getParameters();   // 1.8才有该方法
-            Class[] mcls = m.getParameterTypes();       // 1.7用这个方法
+//            Class[] mcls = m.getParameterTypes();       // 1.7用这个方法
             Object[] args = p.getArgs();
 
             // 先看一下是否有HttpServletRequest
             boolean have = false;
             String requestParam = "";
-            for (int i = 0; i < mcls.length; i++) {
-                if (mcls[i].equals(HttpServletRequest.class)) {
+            for (int i = 0; i < args.length; i++) {
+                if (args[i].getClass().equals(HttpServletRequest.class)) {
                     have = true;
                     // 处理request里的参数
                     HttpServletRequest req = (HttpServletRequest) args[i];
@@ -71,7 +71,7 @@ public class LogPrintRestfulAdvice {
                 }
             }
             Annotation[][] annos = m.getParameterAnnotations();
-            for (int i = 0; i < mcls.length; i++) {
+            for (int i = 0; i < args.length; i++) {
                 Annotation[] ano = annos[i];
                 for (int j = 0; j < ano.length; j++) {
                     Class anoClass = ano[j].annotationType();
@@ -145,7 +145,7 @@ public class LogPrintRestfulAdvice {
         if (status.equals("error")) {
             log.error(message);
         } else {
-            log.debug(message);
+            log.info(message);
         }
         return ret;
     }

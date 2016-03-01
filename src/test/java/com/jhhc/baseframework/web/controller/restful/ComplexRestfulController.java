@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -67,6 +68,13 @@ public class ComplexRestfulController extends RestfulControllerBase {
         // 去修改
         Sret sr = new Sret();
         sr.setOk("修改元素id=" + id);
+        return sr;
+    }
+
+    @RequestMapping(value = {"/decode"}, method = RequestMethod.GET)
+    public Object decode(@RequestParam("json") String json, HttpServletRequest request) {
+        Sret sr = new Sret();
+        sr.setOk("收到参数json=" + json);
         return sr;
     }
 }

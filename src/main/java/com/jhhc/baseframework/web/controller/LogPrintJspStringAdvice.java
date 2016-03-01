@@ -88,7 +88,7 @@ public class LogPrintJspStringAdvice {
         }
 
         // 打印日志信息
-        log.debug(msg + ", 请求" + jsp + ".jsp,  ==> ok");
+        log.info(msg + ", 请求" + jsp + ".jsp,  ==> ok");
 
         return jsp;
     }
