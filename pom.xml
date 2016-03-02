@@ -4,6 +4,8 @@
     
     <description>
         1、制作纯RESTful版本，除了常规的网页、资源文件和jsp之外，其余皆为REST
+        2、把aop的路径配置写在config.properties中
+        3、对GET传进来的参数进行解码
     </description>
     
     <groupId>com.jhhc.baseframework</groupId>

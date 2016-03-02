@@ -19,7 +19,7 @@
                            http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
     
     <context:component-scan base-package="com.jhhc.baseframework.web.controller"/>
-    
+
     <mvc:annotation-driven>
         <!-- 消息编码为utf-8 -->
         <mvc:message-converters register-defaults="true">
