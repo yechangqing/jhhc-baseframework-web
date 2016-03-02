@@ -36,8 +36,8 @@ public class RestfulControllerTest extends IntegrateRestfulBase {
 //    @Test
     public void test_doGet() {
         TestReturn ret = doGet("/std/contracts/");
-        assertThat(ret.getHeader("status"), is("ok"));
-        assertThat(ret.getHeader("message"), is("ok"));
+        assertThat(ret.getStatus(), is("ok"));
+        assertThat(ret.getMessage(), is("ok"));
         List<Contract> list = ret.getObject4List(Contract.class);
         assertThat(list.size(), is(3));
         assertThat(list.get(1).getCode(), is("m1609"));
@@ -46,8 +46,8 @@ public class RestfulControllerTest extends IntegrateRestfulBase {
     @Test
     public void test_doGet1() {
         TestReturn ret = doGet("/std/contracts/3");
-        assertThat(ret.getHeader("status"), is("ok"));
-        assertThat(ret.getHeader("message"), is("ok"));
+        assertThat(ret.getStatus(), is("ok"));
+        assertThat(ret.getMessage(), is("ok"));
         assertThat(ret.getBody(), not(nullValue()));
         Contract con = ret.getObject(Contract.class);
         assertThat(con.getId(), is("3"));
@@ -62,10 +62,10 @@ public class RestfulControllerTest extends IntegrateRestfulBase {
         Map map = new HashMap();
         map.put("json", new Gson().toJson(con));
         TestReturn ret = doPost("/std/contracts/", map);
-        assertThat(ret.getHeader("status"), is("ok"));
-        assertThat(ret.getHeader("message"), is("创建成功"));
-        assertThat(ret.getHeader("name"), is("yecq"));
-        assertThat(ret.getHeader("depart"), is("ise"));
+        assertThat(ret.getStatus(), is("ok"));
+        assertThat(ret.getMessage(), is("创建成功"));
+//        assertThat(ret.getHeader("name"), is("yecq"));
+//        assertThat(ret.getHeader("depart"), is("ise"));
         String id = ret.getObject(String.class);
         assertThat(id, is("4"));
     }
@@ -77,35 +77,35 @@ public class RestfulControllerTest extends IntegrateRestfulBase {
         con.setMargin(0.06);
         map.put("json", con);
         TestReturn ret = doPut("/std/contracts/3", map);
-        assertThat(ret.getHeader("status"), is("ok"));
-        assertThat(ret.getHeader("message"), is("修改成功"));
-        assertThat(ret.getHeader("time"), is("2015-1-1"));
+        assertThat(ret.getStatus(), is("ok"));
+        assertThat(ret.getMessage(), is("修改成功"));
+//        assertThat(ret.getHeader("time"), is("2015-1-1"));
     }
 
     @Test
     public void test_delete() {
         TestReturn ret = doDelete("/std/contracts/2");
-        assertThat(ret.getHeader("status"), is("ok"));
-        assertThat(ret.getHeader("message"), is("删除成功"));
+        assertThat(ret.getStatus(), is("ok"));
+        assertThat(ret.getMessage(), is("删除成功"));
     }
 
     @Test
     public void test_delete_logged() {
         TestReturn ret = doDelete("/std/contracts/2/log");
-        assertThat(ret.getHeader("status"), is("fail"));
-        assertThat(ret.getHeader("message"), is("用户未登录"));
+        assertThat(ret.getStatus(), is("fail"));
+        assertThat(ret.getMessage(), is("用户未登录"));
     }
 
     @Test
     public void test_delete_logged1() {
         TestReturn ret = doDelete("/std/contracts/2/log1");
-        assertThat(ret.getHeader("status"), is("ok"));
+        assertThat(ret.getStatus(), is("ok"));
     }
 
     @Test
     public void test_getContractDirect() {
         TestReturn ret = doGet("/std/contracts/1/other1");
-        assertThat(ret.getHeader("status"), is("ok"));
+        assertThat(ret.getStatus(), is("ok"));
         Contract con = ret.getObject(Contract.class);
         assertThat(con.getCode(), is("L1610"));
     }
@@ -113,16 +113,16 @@ public class RestfulControllerTest extends IntegrateRestfulBase {
     @Test
     public void test_getContractDirect2() {
         TestReturn ret = doGet("/std/contracts/1/other2");
-        assertThat(ret.getHeader("status"), is("ok"));
+        assertThat(ret.getStatus(), is("ok"));
         Contract con = ret.getObject(Contract.class);
         assertThat(con.getCode(), is("sr1507"));
-        assertThat(ret.getHeader("exchange"), is("大连"));
+//        assertThat(ret.getHeader("exchange"), is("大连"));
     }
 
     @Test
     public void test_doGetWithParam() {
         TestReturn ret = doGet("/std/contracts?cond1=id>2&cond2=name=1234");
-        assertThat(ret.getHeader("status"), is("ok"));
+        assertThat(ret.getStatus(), is("ok"));
     }
 
     @Test
@@ -131,7 +131,7 @@ public class RestfulControllerTest extends IntegrateRestfulBase {
         map.put("cond1", "id>1000");
         map.put("cond2", "name!=yecq");
         TestReturn ret = doGet("/std/contracts", map);
-        assertThat(ret.getHeader("status"), is("ok"));
+        assertThat(ret.getStatus(), is("ok"));
     }
 
     @Test
@@ -140,7 +140,7 @@ public class RestfulControllerTest extends IntegrateRestfulBase {
         Map map = new HashMap();
         map.put("cond1", "id<3");
         TestReturn ret = doGet("/std/contracts?cond2=number<>1998", map);
-        assertThat(ret.getHeader("status"), is("ok"));
+        assertThat(ret.getStatus(), is("ok"));
     }
-    
+
 }

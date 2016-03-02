@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -12,6 +13,9 @@ import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -80,7 +84,23 @@ public class ParamDecode4GetAdvice {
         }
 
         // 处理参数替换
-        return (HttpEntity) p.proceed(args);
+        HttpEntity ent = (HttpEntity) p.proceed(args);
+        // ent是不能修改的，换一个HttpEntity返回
+
+        // 把Header中的message字段编码
+        HttpHeaders headers = ent.getHeaders();
+        String status = headers.get("status").get(0);
+        String message = headers.get("message").get(0);
+        try {
+            // 编码
+            message = URLEncoder.encode(message, "utf-8");
+        } catch (UnsupportedEncodingException ex) {
+        }
+
+        HttpHeaders newHeaders = new HttpHeaders();
+        newHeaders.add("status", status);
+        newHeaders.add("message", message);
+        return new ResponseEntity(ent.getBody(), newHeaders, HttpStatus.OK);
 
     }
 }
